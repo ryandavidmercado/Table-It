@@ -1,13 +1,23 @@
-const service = require("./reservations.service");
-const hasData = require("../validation/hasData");
-const hasFields = require("../validation/hasFields")([
+const validFields = [
   "first_name",
   "last_name",
   "mobile_number",
   "reservation_date",
   "reservation_time",
   "people",
-]);
+];
+
+const service = require("./reservations.service");
+const hasData = require("../validation/hasData");
+const hasFields = require("../validation/hasFields")(validFields);
+const hasOnlyFields =
+  require("../validation/reservations/hasOnlyFieldsNonInclusive")([
+    ...validFields,
+    "status",
+    "created_at",
+    "updated_at",
+    "reservation_id",
+  ]);
 const {
   dateTimeMiddleware,
 } = require("../validation/reservations/validateDateTime");
@@ -16,20 +26,8 @@ const hasStatus = require("../validation/hasFields")(["status"]);
 const validStatus = require("../validation/reservations/validStatus");
 const statusIsBooked = require("../validation/reservations/statusIsBooked");
 const statusIsNotFinished = require("../validation/reservations/statusIsNotFinished");
-
-// Extra validation middleware
-async function reservationExists(req, res, next) {
-  const reservation = await service.read(req.params.reservationId);
-
-  if (!reservation)
-    return next({
-      status: 404,
-      message: `Reservation with reservation_id ${req.params.reservationId} not found.`,
-    });
-
-  res.locals.reservation = reservation;
-  next();
-}
+const reservationExists = require("../validation/reservations/reservationExists");
+const reservationIdMatches = require("../validation/reservations/reservationIdMatches");
 
 // Main route handlers
 async function list(req, res) {
@@ -64,12 +62,19 @@ const updateStatus = async (req, res) => {
   });
 };
 
+const update = async (req, res) => {
+  res.json({
+    data: await service.update(Number(req.params.reservationId), req.body.data),
+  });
+};
+
 module.exports = {
   list,
   read: [reservationExists, read],
   create: [
     hasData,
     hasFields,
+    hasOnlyFields,
     statusIsBooked,
     peopleIsNum,
     dateTimeMiddleware,
@@ -82,5 +87,16 @@ module.exports = {
     reservationExists,
     statusIsNotFinished,
     updateStatus,
+  ],
+  update: [
+    hasData,
+    hasFields,
+    hasOnlyFields,
+    statusIsBooked,
+    peopleIsNum,
+    dateTimeMiddleware,
+    reservationExists,
+    reservationIdMatches,
+    update,
   ],
 };
