@@ -3,7 +3,7 @@
  * The default values is overridden by the `API_BASE_URL` environment variable.
  */
 import formatReservationDate from "./format-reservation-date";
-import formatReservationTime from "./format-reservation-date";
+import formatReservationTime from "./format-reservation-time";
 
 const API_BASE_URL =
   process.env.NODE_ENV === "production"
@@ -74,7 +74,9 @@ export async function readReservation(reservationId, signal) {
   return await fetchJson(`${API_BASE_URL}/reservations/${reservationId}`, {
     headers,
     signal,
-  });
+  })
+    .then(formatReservationDate)
+    .then(formatReservationTime);
 }
 
 /**
@@ -112,6 +114,33 @@ export async function seatReservation(reservationId, tableId, signal) {
     body: JSON.stringify({
       data: {
         reservation_id: Number(reservationId),
+      },
+    }),
+  });
+}
+
+export async function editReservation(reservation, signal) {
+  const {
+    reservation_id,
+    first_name,
+    last_name,
+    mobile_number,
+    reservation_date,
+    reservation_time,
+    people,
+  } = reservation;
+  return await fetchJson(`${API_BASE_URL}/reservations/${reservation_id}`, {
+    headers,
+    signal,
+    method: "PUT",
+    body: JSON.stringify({
+      data: {
+        first_name,
+        last_name,
+        mobile_number,
+        reservation_date,
+        reservation_time,
+        people,
       },
     }),
   });
