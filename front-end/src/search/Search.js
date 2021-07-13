@@ -5,14 +5,13 @@ import ErrorAlert from "../layout/ErrorAlert";
 
 function Search() {
   const [number, setNumber] = useState("");
+  const [numberCache, setNumberCache] = useState("");
   const [reservations, setReservations] = useState([]);
   const [err, setErr] = useState(null);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
+  const loadSearchResults = (mobile_number) => {
     setErr(null);
-    listReservations({ mobile_number: number })
+    return listReservations({ mobile_number })
       .then((res) => {
         if (!res.length) setErr({ message: "No reservations found" });
         return res;
@@ -21,8 +20,18 @@ function Search() {
       .catch(setErr);
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    setNumberCache(number);
+    loadSearchResults(number);
+  };
+
   const changeHandler = (e) => {
     setNumber(e.target.value);
+  };
+
+  const refreshReservations = () => {
+    loadSearchResults(numberCache);
   };
 
   return (
@@ -42,7 +51,12 @@ function Search() {
       <ErrorAlert error={err} />
       <div>
         {reservations.map((reservation, idx) => (
-          <ReservationCard key={idx} reservation={reservation} />
+          <ReservationCard
+            key={idx}
+            reservation={reservation}
+            setErr={setErr}
+            refreshReservations={refreshReservations}
+          />
         ))}
       </div>
     </>
