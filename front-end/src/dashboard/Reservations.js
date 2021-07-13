@@ -29,7 +29,12 @@ function Reservations({ date, updateAll }) {
       {reservations.map(
         (reservation, idx) =>
           reservation.status !== "finished" && (
-            <ReservationCard key={idx} reservation={reservation} />
+            <ReservationCard
+              key={idx}
+              reservation={reservation}
+              setErr={setErr}
+              refreshReservations={loadReservations}
+            />
           )
       )}
     </div>

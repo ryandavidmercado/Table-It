@@ -1,6 +1,6 @@
 const validStatus = (req, res, next) => {
   const { status } = req.body.data;
-  const validEntries = ["booked", "seated", "finished"];
+  const validEntries = ["booked", "seated", "finished", "cancelled"];
 
   return validEntries.includes(status)
     ? next()
