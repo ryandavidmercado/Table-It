@@ -124,3 +124,15 @@ export async function finishTable(tableId, signal) {
     method: "DELETE",
   });
 }
+
+export async function updateStatus(reservation_id, status, signal) {
+  return await fetchJson(
+    `${API_BASE_URL}/reservations/${reservation_id}/status`,
+    {
+      headers,
+      signal,
+      method: "PUT",
+      body: JSON.stringify({ data: { status } }),
+    }
+  );
+}
