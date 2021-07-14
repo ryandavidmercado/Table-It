@@ -27,16 +27,14 @@ const finishTable = async (table_id) =>
       .where({ table_id })
       .then(({ reservation_id }) => reservation_id);
 
-    const finishedTable = await trx("tables")
-      .where({ table_id })
-      .update({ reservation_id: null }, "*")
-      .then((res) => res[0]);
-
     await trx("reservations")
       .where({ reservation_id })
       .update({ status: "finished" });
 
-    return finishedTable;
+    return await trx("tables")
+      .where({ table_id })
+      .update({ reservation_id: null }, "*")
+      .then((res) => res[0]);
   });
 
 module.exports = { list, read, create, seatReservation, finishTable };
