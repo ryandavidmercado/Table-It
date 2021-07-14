@@ -1,3 +1,4 @@
+const service = require("./reservations.service");
 const validFields = [
   "first_name",
   "last_name",
@@ -7,8 +8,15 @@ const validFields = [
   "people",
 ];
 
-const service = require("./reservations.service");
+//Validation middleweare
 const hasData = require("../validation/hasData");
+const peopleIsNum = require("../validation/reservations/peopleIsNum");
+const hasStatus = require("../validation/hasFields")(["status"]);
+const validStatus = require("../validation/reservations/validStatus");
+const statusIsBooked = require("../validation/reservations/statusIsBooked");
+const statusIsNotFinished = require("../validation/reservations/statusIsNotFinished");
+const reservationExists = require("../validation/reservations/reservationExists");
+const reservationIdMatches = require("../validation/reservations/reservationIdMatches");
 const hasFields = require("../validation/hasFields")(validFields);
 const hasOnlyFields = require("../validation/hasOnlyFieldsNonInclusive")([
   ...validFields,
@@ -20,15 +28,8 @@ const hasOnlyFields = require("../validation/hasOnlyFieldsNonInclusive")([
 const {
   dateTimeMiddleware,
 } = require("../validation/reservations/validateDateTime");
-const peopleIsNum = require("../validation/reservations/peopleIsNum");
-const hasStatus = require("../validation/hasFields")(["status"]);
-const validStatus = require("../validation/reservations/validStatus");
-const statusIsBooked = require("../validation/reservations/statusIsBooked");
-const statusIsNotFinished = require("../validation/reservations/statusIsNotFinished");
-const reservationExists = require("../validation/reservations/reservationExists");
-const reservationIdMatches = require("../validation/reservations/reservationIdMatches");
 
-// Main route handlers
+//Main route handlers
 async function list(req, res) {
   const { date = "", mobile_number = "" } = req.query;
 
