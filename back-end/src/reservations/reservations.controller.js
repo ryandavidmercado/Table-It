@@ -10,14 +10,13 @@ const validFields = [
 const service = require("./reservations.service");
 const hasData = require("../validation/hasData");
 const hasFields = require("../validation/hasFields")(validFields);
-const hasOnlyFields =
-  require("../validation/reservations/hasOnlyFieldsNonInclusive")([
-    ...validFields,
-    "status",
-    "created_at",
-    "updated_at",
-    "reservation_id",
-  ]);
+const hasOnlyFields = require("../validation/hasOnlyFieldsNonInclusive")([
+  ...validFields,
+  "status",
+  "created_at",
+  "updated_at",
+  "reservation_id",
+]);
 const {
   dateTimeMiddleware,
 } = require("../validation/reservations/validateDateTime");
