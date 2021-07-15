@@ -1,79 +1,76 @@
 import { useHistory } from "react-router-dom";
+import {
+  NumberInput,
+  Input,
+  Stack,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+} from "@chakra-ui/react";
 
 function ReservationForm({ form, handleChange, handleSubmit }) {
   const history = useHistory();
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="first_name">
-        First Name
-        <input
+      <Stack spacing="2">
+        <Input
           type="text"
           name="first_name"
+          placeholder="First Name"
           value={form.first_name || ""}
           onChange={handleChange}
           required
         />
-      </label>
-      <label htmlFor="last_name">
-        Last Name
-        <input
+        <Input
           type="text"
           name="last_name"
+          placeholder="Last Name"
           value={form.last_name || ""}
           onChange={handleChange}
           required
         />
-      </label>
-      <label htmlFor="mobile_number">
-        Phone Number
-        <input
+        <Input
           type="tel"
           name="mobile_number"
+          placeholder="Phone Number"
           value={form.mobile_number || ""}
           onChange={handleChange}
           required
         />
-      </label>
-      <label htmlFor="reservation_date">
-        Reservation Date
-        <input
+        <Input
           type="date"
           name="reservation_date"
-          placeholder="YYYY-MM-DD"
+          placeholder="Reservation Date"
           pattern="\d{4}-d{2}-d{2}"
           value={form.reservation_date || ""}
           onChange={handleChange}
           required
         />
-      </label>
-      <label htmlFor="reservation_time">
-        Reservation Time
-        <input
-          type="time"
-          name="reservation_time"
-          placeholder="HH:MM"
-          pattern="\d{2}:\d{2}"
-          value={form.reservation_time || ""}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label htmlFor="people">
-        Party Size
-        <input
-          type="number"
-          name="people"
-          min="1"
-          value={form.people || ""}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <button type="submit">Submit</button>
-      <button type="button" onClick={history.goBack}>
-        Cancel
-      </button>
+        <label htmlFor="reservation_time">
+          Reservation Time
+          <Input
+            type="time"
+            name="reservation_time"
+            placeholder="HH:MM"
+            pattern="\d{2}:\d{2}"
+            value={form.reservation_time || ""}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        <label htmlFor="people">
+          Party Size
+          <NumberInput name="people" min={1} value={form.people || ""} required>
+            <NumberInputField onChange={handleChange} />
+          </NumberInput>
+        </label>
+        <button type="submit">Submit</button>
+        <button type="button" onClick={history.goBack}>
+          Cancel
+        </button>
+      </Stack>
     </form>
   );
 }
