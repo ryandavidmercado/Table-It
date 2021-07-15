@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "./Menu";
 import Routes from "./Routes";
 
+import { Box } from "@chakra-ui/react";
 import "./Layout.css";
 
 /**
@@ -12,17 +13,24 @@ import "./Layout.css";
  * @returns {JSX.Element}
  */
 function Layout() {
+  const [height, setHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setHeight(window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  });
+
   return (
-    <div className="container-fluid">
-      <div className="row h-100">
-        <div className="col-md-2 side-bar">
-          <Menu />
-        </div>
-        <div className="col">
-          <Routes />
-        </div>
-      </div>
-    </div>
+    <>
+      <Menu />
+      <Box height={height}>
+        <Routes />
+      </Box>
+    </>
   );
 }
 
