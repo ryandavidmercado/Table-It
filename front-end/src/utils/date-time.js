@@ -40,6 +40,16 @@ export function formatAsTime(timeString) {
   return timeString.match(timeFormat)[0];
 }
 
+export function formatAsTimeTwelve(timeString) {
+  const twentyFour = formatAsTime(timeString);
+  let hours = Number(twentyFour.slice(0, 2));
+  const mins = Number(twentyFour.slice(3));
+  const adendum = hours < 12 ? "AM" : "PM";
+  hours = hours % 12 || 12;
+
+  return `${hours}:${mins} ${adendum}`;
+}
+
 /**
  * Today's date as YYYY-MM-DD.
  * @returns {*}
@@ -57,7 +67,7 @@ export function today() {
  *  the date one day prior to currentDate, formatted as YYYY-MM-DD
  */
 export function previous(currentDate) {
-  let [ year, month, day ] = currentDate.split("-");
+  let [year, month, day] = currentDate.split("-");
   month -= 1;
   const date = new Date(year, month, day);
   date.setMonth(date.getMonth());
@@ -73,7 +83,7 @@ export function previous(currentDate) {
  *  the date one day after currentDate, formatted as YYYY-MM-DD
  */
 export function next(currentDate) {
-  let [ year, month, day ] = currentDate.split("-");
+  let [year, month, day] = currentDate.split("-");
   month -= 1;
   const date = new Date(year, month, day);
   date.setMonth(date.getMonth());
