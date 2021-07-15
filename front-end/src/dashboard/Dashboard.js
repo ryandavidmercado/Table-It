@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 
 import Reservations from "./Reservations";
 import Tables from "./Tables";
+import { Flex, SlideFade, Grid, Box } from "@chakra-ui/react";
+import DashboardNav from "./DashboardNav";
 
 /**
  * Defines the dashboard page.
@@ -19,13 +21,22 @@ function Dashboard() {
   // to trigger an update, toggle updateAll using setUpdateAll.
   // to hook a component into global updates, add updateAll to its useEffect dependencies.
   const [updateAll, setUpdateAll] = useState(false);
+  const [selection, setSelection] = useState("reservations");
+  const isReservations = selection === "reservations";
+  const isTables = selection === "tables";
 
   return (
-    <main>
-      <h1>Dashboard</h1>
-      <Reservations date={date} updateAll={updateAll} />
-      <Tables setUpdateAll={setUpdateAll} updateAll={updateAll} />
-    </main>
+    <Grid
+      as="main"
+      h="100%"
+      templateColumns="1fr"
+      templateRows="1fr auto"
+      overflowY="hidden"
+    >
+      {isReservations && <Reservations date={date} updateAll={updateAll} />}
+      {isTables && <Tables setUpdateAll={setUpdateAll} updateAll={updateAll} />}
+      <DashboardNav selection={selection} setSelection={setSelection} />
+    </Grid>
   );
 }
 

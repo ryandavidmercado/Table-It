@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import dayjs from "dayjs";
+import { ButtonGroup, Button, Center } from "@chakra-ui/react";
 
 function DateHandler({ date }) {
   const history = useHistory();
@@ -15,11 +16,13 @@ function DateHandler({ date }) {
   const nextHandler = () => history.push(`/dashboard?date=${getNext(date)}`);
 
   return (
-    <div style={{ display: "flex" }}>
-      <button onClick={prevHandler}>Previous</button>
-      <button onClick={todayHandler}>Today</button>
-      <button onClick={nextHandler}>Next</button>
-    </div>
+    <Center mt="10px">
+      <ButtonGroup variant="outline" isAttached size="sm">
+        <Button onClick={prevHandler}>Previous</Button>
+        <Button onClick={todayHandler}>Today</Button>
+        <Button onClick={nextHandler}>Next</Button>
+      </ButtonGroup>
+    </Center>
   );
 }
 
