@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 
 import Reservations from "./Reservations";
 import Tables from "./Tables";
-import { Flex, SlideFade, Grid, Box } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import DashboardNav from "./DashboardNav";
 
 /**

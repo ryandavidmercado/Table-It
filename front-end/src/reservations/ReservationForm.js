@@ -1,13 +1,5 @@
 import { useHistory } from "react-router-dom";
-import {
-  NumberInput,
-  Input,
-  Stack,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-} from "@chakra-ui/react";
+import { NumberInput, Input, Stack, NumberInputField } from "@chakra-ui/react";
 
 function ReservationForm({ form, handleChange, handleSubmit }) {
   const history = useHistory();

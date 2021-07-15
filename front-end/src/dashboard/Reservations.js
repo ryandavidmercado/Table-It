@@ -1,6 +1,5 @@
 import { listReservations } from "../utils/api";
 import { useState, useEffect } from "react";
-import ReservationCard from "../common-components/ReservationCard";
 import ErrorAlert from "../layout/ErrorAlert";
 import DateHandler from "./DateHandler";
 import { Box, Grid, Text, Center } from "@chakra-ui/react";

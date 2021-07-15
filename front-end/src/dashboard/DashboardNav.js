@@ -1,4 +1,4 @@
-import { SimpleGrid, Box, Center } from "@chakra-ui/react";
+import { SimpleGrid, Center } from "@chakra-ui/react";
 
 function DashboardNav({ selection, setSelection }) {
   const isReservations = selection === "reservations";
