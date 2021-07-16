@@ -16,14 +16,18 @@ function DashboardNav({ selection, setSelection }) {
         boxShadow={isReservations && "1px 0px 3px rgba(0,0,0,.1)"}
         pt="2px"
         onClick={() => setSelection("reservations")}
+        _hover={{ bg: "rgba(0,0,0,.1)" }}
+        cursor="pointer"
       >
         Reservations
       </Center>
       <Center
-        pt="2px"
         fontWeight={isTables ? "bold" : "normal"}
         boxShadow={isTables && "-1px 0px 3px rgba(0,0,0,.1)"}
+        pt="2px"
         onClick={() => setSelection("tables")}
+        _hover={{ bg: "rgba(0,0,0,.1)" }}
+        cursor="pointer"
       >
         Tables
       </Center>

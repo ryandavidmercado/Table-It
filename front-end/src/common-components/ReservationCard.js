@@ -1,6 +1,7 @@
 import { formatAsTimeTwelve } from "../utils/date-time";
 import { updateStatus } from "../utils/api";
 import titleCaser from "../utils/titleCaser";
+import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
 import {
@@ -11,6 +12,7 @@ import {
   Flex,
   VStack,
   Icon,
+  SlideFade,
 } from "@chakra-ui/react";
 
 import { IoPerson } from "react-icons/io5";
@@ -47,7 +49,6 @@ function ReservationCard({ reservation, refreshReservations, setErr }) {
       width="300px"
       direction="column"
       align="center"
-      mb="15px"
     >
       <Box w="100%" textAlign="center" py="15px">
         <VStack py="15px">

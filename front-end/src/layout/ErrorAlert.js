@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Box, Center } from "@chakra-ui/react";
 /**
  * Defines the alert message to render if the specified error is truthy.
  * @param error
@@ -11,7 +11,17 @@ import React from "react";
 function ErrorAlert({ error }) {
   return (
     error && (
-      <div className="alert alert-danger m-2">Error: {error.message}</div>
+      <Center>
+        <Box
+          className="alert alert-danger m-2"
+          p="20px"
+          bgColor="red.200"
+          w="80%"
+          mt="15px"
+        >
+          Error: {error.message}
+        </Box>
+      </Center>
     )
   );
 }

@@ -33,8 +33,16 @@ function Dashboard() {
       templateRows="1fr auto"
       overflowY="hidden"
     >
-      {isReservations && <Reservations date={date} updateAll={updateAll} />}
-      {isTables && <Tables setUpdateAll={setUpdateAll} updateAll={updateAll} />}
+      <Reservations
+        date={date}
+        updateAll={updateAll}
+        visible={isReservations}
+      />
+      <Tables
+        setUpdateAll={setUpdateAll}
+        updateAll={updateAll}
+        visible={isTables}
+      />
       <DashboardNav selection={selection} setSelection={setSelection} />
     </Grid>
   );
