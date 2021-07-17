@@ -27,7 +27,13 @@ const validations = {
       "Reservations cannot be made for a Tuesday, as the restaurant is closed on these days.",
   },
   isFuture: {
-    check: (dateTime) => dateTime.isAfter(dayjs(), "minute"),
+    check: (dateTime) => {
+      console.log(`
+        Reservation dateTime: ${dateTime.format("YYYY/MM/DD HH:mm")}
+        Now: ${dayjs().format("YYYY/MM/DD HH:mm")}
+      `);
+      return dateTime.isAfter(dayjs(), "minute");
+    },
     message: "Reservations must be made for a future date and/or time.",
   },
   isInTimeFrame: {
@@ -48,6 +54,8 @@ const dateTimeMiddleware = (req, res, next) => {
     req.body.data.reservation_time
   );
   const errors = [];
+
+  console.log(req.body.data);
 
   for (const validationName in validations) {
     const validation = validations[validationName];
