@@ -16,7 +16,15 @@ function Menu() {
           to="/"
         >
           <div className="sidebar-brand-text mx-3">
-            <span>Periodic Tables</span>
+            <span
+              style={{
+                fontWeight: "bold",
+                fontStyle: "italic",
+                fontSize: "1.5rem",
+              }}
+            >
+              Table-It!
+            </span>
           </div>
         </Link>
         <hr className="sidebar-divider my-0" />
