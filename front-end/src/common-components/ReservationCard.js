@@ -3,7 +3,12 @@ import { Link } from "react-router-dom";
 import { updateStatus } from "../utils/api";
 import titleCaser from "../utils/titleCaser";
 
-function ReservationCard({ reservation, refreshReservations, setErr }) {
+function ReservationCard({
+  reservation,
+  refreshReservations,
+  setErr,
+  hideControls = false,
+}) {
   const cancelHandler = (e) => {
     e.preventDefault();
     const reservation_id = e.target.getAttribute("data-reservation-id-cancel");
@@ -17,8 +22,11 @@ function ReservationCard({ reservation, refreshReservations, setErr }) {
       .then(() => refreshReservations())
       .catch(setErr);
   };
+
+  const marginSpacer = { marginRight: "5px" };
+
   return (
-    <div className="card">
+    <div className="card mb-3">
       <div className="card-body">
         <h5 className="card-title">
           {reservation.first_name} {reservation.last_name}
@@ -31,17 +39,22 @@ function ReservationCard({ reservation, refreshReservations, setErr }) {
             Status: {titleCaser(reservation.status)}
           </li>
         </ul>
-        {reservation.status === "booked" && (
+        {reservation.status === "booked" && !hideControls && (
           <div className="card-footer">
             <Link to={`/reservations/${reservation.reservation_id}/seat`}>
-              <button>Seat</button>
+              <button className="btn btn-primary" style={marginSpacer}>
+                Seat
+              </button>
             </Link>
             <Link to={`/reservations/${reservation.reservation_id}/edit`}>
-              <button>Edit</button>
+              <button className="btn btn-secondary" style={marginSpacer}>
+                Edit
+              </button>
             </Link>
             <button
               data-reservation-id-cancel={reservation.reservation_id}
               onClick={cancelHandler}
+              className="btn btn-danger"
             >
               Cancel
             </button>

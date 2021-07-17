@@ -21,7 +21,7 @@ function Dashboard() {
   const [updateAll, setUpdateAll] = useState(false);
 
   return (
-    <main>
+    <main className="container">
       <h1>Dashboard</h1>
       <Reservations date={date} updateAll={updateAll} />
       <Tables setUpdateAll={setUpdateAll} updateAll={updateAll} />

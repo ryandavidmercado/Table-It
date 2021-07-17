@@ -3,6 +3,7 @@ import { listTables, readReservation, seatReservation } from "../utils/api";
 import { useHistory, useParams } from "react-router-dom";
 import { normalizeISODate } from "../utils/parse-dateTime";
 import ErrorAlert from "../layout/ErrorAlert";
+import ReservationCard from "../common-components/ReservationCard";
 
 function SeatReservation() {
   const [tableId, setTableId] = useState("none");
@@ -65,14 +66,20 @@ function SeatReservation() {
       .catch(setErr);
   }
 
+  console.log(reservation);
+
   return (
     <div>
       {tables.length && reservation && (
-        <>
+        <div className="container">
+          <h1>Seat Reservation</h1>
+          <hr />
+          <ReservationCard reservation={reservation} hideControls={true} />
           <ErrorAlert error={err} />
           <form onSubmit={handleSubmit}>
             <select
               name="table_id"
+              className="form-control mb-2 mt-3"
               onChange={(e) => setTableId(e.target.value)}
               value={tableId}
               required
@@ -86,13 +93,18 @@ function SeatReservation() {
                 </option>
               ))}
             </select>
-            <br />
-            <button type="submit">Submit</button>
-            <button type="button" onClick={history.goBack}>
+            <button type="submit" className="btn btn-primary mr-2">
+              Submit
+            </button>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={history.goBack}
+            >
               Cancel
             </button>
           </form>
-        </>
+        </div>
       )}
     </div>
   );

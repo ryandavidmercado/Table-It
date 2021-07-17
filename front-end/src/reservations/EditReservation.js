@@ -55,7 +55,9 @@ function EditReservation() {
   };
 
   return (
-    <div>
+    <div className="container">
+      <h1>Edit Reservation</h1>
+      <hr />
       {form.reservation_id && (
         <ReservationForm
           form={form}

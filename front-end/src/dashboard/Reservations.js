@@ -21,11 +21,12 @@ function Reservations({ date, updateAll }) {
 
   return (
     <div>
-      <div className="d-md-flex mb-3">
+      <div className="md-flex mb-3">
         <h4 className="mb-0">Reservations for: {date}</h4>
       </div>
       <DateHandler date={date} />
       <ErrorAlert error={err} />
+      <hr />
       {reservations.map(
         (reservation, idx) =>
           reservation.status !== "finished" && (

@@ -29,16 +29,17 @@ function Tables({ updateAll, setUpdateAll }) {
   return (
     <div>
       <ErrorAlert error={err} />
-      <table className="table">
+      <table className="table table-striped mt-3">
         <thead>
           <tr>
             <th>Table Name</th>
             <th>Capacity</th>
             <th>Occupied?</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {tables.map((table) => (
+          {tables.map((table, idx) => (
             <tr key={table.table_id}>
               <td>{table.table_name}</td>
               <td>{table.capacity}</td>
@@ -50,6 +51,7 @@ function Tables({ updateAll, setUpdateAll }) {
                   <button
                     data-table-id-finish={table.table_id}
                     onClick={finishHandler}
+                    className="btn btn-primary"
                   >
                     Finish
                   </button>

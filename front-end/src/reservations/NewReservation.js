@@ -44,7 +44,9 @@ function NewReservation() {
   };
 
   return (
-    <div>
+    <div className="container">
+      <h1>New Reservation</h1>
+      <hr />
       <ReservationForm
         form={form}
         handleChange={handleChange}

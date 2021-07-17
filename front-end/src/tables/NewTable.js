@@ -26,32 +26,42 @@ function NewTable() {
   };
 
   return (
-    <div>
+    <div className="container">
+      <h1>New Table</h1>
+      <hr />
       <form onSubmit={handleSumbit}>
-        <label htmlFor="table_name">
-          Table Name
+        <div className="form-group">
+          <label htmlFor="table_name">Table Name</label>
           <input
             type="text"
             name="table_name"
+            className="form-control"
             minLength="2"
             value={form.table_name}
             onChange={handleChange}
             required
           />
-        </label>
-        <label htmlFor="capacity">
-          Capacity
+        </div>
+        <div className="form-group">
+          <label htmlFor="capacity">Capacity</label>
           <input
             type="number"
             name="capacity"
+            className="form-control"
             value={form.capacity}
             onChange={handleChange}
             min="1"
             required
           />
-        </label>
-        <button type="submit">Submit</button>
-        <button type="button" onClick={history.goBack}>
+        </div>
+        <button type="submit" className="btn btn-primary mr-2">
+          Submit
+        </button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={history.goBack}
+        >
           Cancel
         </button>
       </form>

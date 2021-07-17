@@ -15,10 +15,16 @@ function DateHandler({ date }) {
   const nextHandler = () => history.push(`/dashboard?date=${getNext(date)}`);
 
   return (
-    <div style={{ display: "flex" }}>
-      <button onClick={prevHandler}>Previous</button>
-      <button onClick={todayHandler}>Today</button>
-      <button onClick={nextHandler}>Next</button>
+    <div className="btn btn-group pl-0">
+      <button onClick={prevHandler} className="btn btn-secondary">
+        Previous
+      </button>
+      <button onClick={todayHandler} className="btn btn-primary">
+        Today
+      </button>
+      <button onClick={nextHandler} className="btn btn-secondary">
+        Next
+      </button>
     </div>
   );
 }

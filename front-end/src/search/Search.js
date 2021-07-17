@@ -35,17 +35,25 @@ function Search() {
   };
 
   return (
-    <>
+    <div className="container">
+      <h1>Search</h1>
+      <hr />
       <div>
-        <form onSubmit={submitHandler}>
+        <form
+          onSubmit={submitHandler}
+          style={{ display: "flex", marginBottom: "15px" }}
+        >
           <input
             type="text"
             name="mobile_number"
+            className="form-control"
             onChange={changeHandler}
             value={number}
             placeholder="Enter a customer's phone number"
           />
-          <button type="submit">Find</button>
+          <button type="submit" className="btn btn-primary">
+            Find
+          </button>
         </form>
       </div>
       <ErrorAlert error={err} />
@@ -59,7 +67,7 @@ function Search() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
