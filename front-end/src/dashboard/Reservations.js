@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 import { listReservations } from "../utils/api";
 
-import ReservationCard from "../common-components/ReservationCard";
+import ReservationCard from "../reservations/ReservationCard";
 import DateHandler from "./DateHandler";
 import ErrorAlert from "../layout/ErrorAlert";
 

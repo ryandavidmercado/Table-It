@@ -5,7 +5,7 @@ import { listTables, readReservation, seatReservation } from "../utils/api";
 import { normalizeISODate } from "../utils/parse-dateTime";
 
 import ErrorAlert from "../layout/ErrorAlert";
-import ReservationCard from "../common-components/ReservationCard";
+import ReservationCard from "./ReservationCard";
 
 function SeatReservation() {
   const [tableId, setTableId] = useState("none");
