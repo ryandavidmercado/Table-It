@@ -1,8 +1,10 @@
-import { listReservations } from "../utils/api";
 import { useState, useEffect } from "react";
+
+import { listReservations } from "../utils/api";
+
 import ReservationCard from "../common-components/ReservationCard";
-import ErrorAlert from "../layout/ErrorAlert";
 import DateHandler from "./DateHandler";
+import ErrorAlert from "../layout/ErrorAlert";
 
 function Reservations({ date, updateAll }) {
   const [reservations, setReservations] = useState([]);

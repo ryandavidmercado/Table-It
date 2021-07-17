@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { listTables, readReservation, seatReservation } from "../utils/api";
 import { useHistory, useParams } from "react-router-dom";
+
+import { listTables, readReservation, seatReservation } from "../utils/api";
 import { normalizeISODate } from "../utils/parse-dateTime";
+
 import ErrorAlert from "../layout/ErrorAlert";
 import ReservationCard from "../common-components/ReservationCard";
 

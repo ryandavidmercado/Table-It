@@ -1,6 +1,7 @@
 import { useState } from "react";
-import useQuery from "../utils/useQuery";
 import dayjs from "dayjs";
+
+import useQuery from "../utils/useQuery";
 
 import Reservations from "./Reservations";
 import Tables from "./Tables";

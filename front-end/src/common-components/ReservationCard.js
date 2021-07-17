@@ -1,5 +1,6 @@
-import { formatAsTime } from "../utils/date-time";
 import { Link } from "react-router-dom";
+
+import { formatAsTime } from "../utils/date-time";
 import { updateStatus } from "../utils/api";
 import titleCaser from "../utils/titleCaser";
 
