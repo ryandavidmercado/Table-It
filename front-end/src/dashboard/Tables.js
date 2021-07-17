@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { listTables, finishTable } from "../utils/api";
+import { listTables } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
-import { Box, Grid, Text, Center, Divider } from "@chakra-ui/react";
+import { Box, Grid, Text, Center } from "@chakra-ui/react";
 
 function Tables({ updateAll, setUpdateAll, visible }) {
   const [tables, setTables] = useState([]);
@@ -16,16 +16,16 @@ function Tables({ updateAll, setUpdateAll, visible }) {
     return () => abortController.abort();
   }
 
-  function finishHandler(e) {
-    const finish = window.confirm(
-      "Is this table ready to seat new guests? This cannot be undone."
-    );
-    if (!finish) return;
+  // function finishHandler(e) {
+  //   const finish = window.confirm(
+  //     "Is this table ready to seat new guests? This cannot be undone."
+  //   );
+  //   if (!finish) return;
 
-    finishTable(e.target.getAttribute("data-table-id-finish"))
-      .then(() => setUpdateAll((updateAll) => !updateAll))
-      .catch(setErr);
-  }
+  //   finishTable(e.target.getAttribute("data-table-id-finish"))
+  //     .then(() => setUpdateAll((updateAll) => !updateAll))
+  //     .catch(setErr);
+  // }
 
   const openSeats =
     tables.length &&
