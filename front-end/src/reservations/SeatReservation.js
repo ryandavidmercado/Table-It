@@ -72,7 +72,7 @@ function SeatReservation() {
 
   return (
     <div>
-      {tables.length && reservation && (
+      {!!tables.length && reservation && (
         <div className="container">
           <h1>Seat Reservation</h1>
           <hr />

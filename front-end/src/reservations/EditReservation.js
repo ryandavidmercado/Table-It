@@ -19,6 +19,7 @@ function EditReservation() {
     people: "",
     reservation_id: "",
   });
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   const history = useHistory();
   const { reservationId } = useParams();
@@ -27,6 +28,7 @@ function EditReservation() {
     const abortController = new AbortController();
     readReservation(reservationId, abortController.signal)
       .then(setForm)
+      .then(() => setHasLoaded(true))
       .catch(setError);
   };
 
@@ -59,7 +61,7 @@ function EditReservation() {
     <div className="container">
       <h1>Edit Reservation</h1>
       <hr />
-      {form.reservation_id && (
+      {hasLoaded && (
         <ReservationForm
           form={form}
           handleChange={handleChange}
