@@ -30,38 +30,40 @@ function Tables({ updateAll, setUpdateAll }) {
   return (
     <div>
       <ErrorAlert error={err} />
-      <table className="table table-striped mt-3">
-        <thead>
-          <tr>
-            <th>Table Name</th>
-            <th>Capacity</th>
-            <th>Occupied?</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {tables.map((table, idx) => (
-            <tr key={table.table_id}>
-              <td>{table.table_name}</td>
-              <td>{table.capacity}</td>
-              <td data-table-id-status={table.table_id}>
-                {table.reservation_id === null ? "Free" : "Occupied"}
-              </td>
-              <td>
-                {table.reservation_id === null ? null : (
-                  <button
-                    data-table-id-finish={table.table_id}
-                    onClick={finishHandler}
-                    className="btn btn-primary"
-                  >
-                    Finish
-                  </button>
-                )}
-              </td>
+      <div className="table-responsive">
+        <table className="table table-striped mt-3">
+          <thead>
+            <tr>
+              <th>Table Name</th>
+              <th>Capacity</th>
+              <th>Occupied?</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {tables.map((table, idx) => (
+              <tr key={table.table_id}>
+                <td>{table.table_name}</td>
+                <td>{table.capacity}</td>
+                <td data-table-id-status={table.table_id}>
+                  {table.reservation_id === null ? "Free" : "Occupied"}
+                </td>
+                <td>
+                  {table.reservation_id === null ? null : (
+                    <button
+                      data-table-id-finish={table.table_id}
+                      onClick={finishHandler}
+                      className="btn btn-primary"
+                    >
+                      Finish
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
