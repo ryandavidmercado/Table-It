@@ -12,7 +12,7 @@ With ***Table-It!***, a host is given access to a high-level dashboard in which 
 * Seat reservations at a table
 * Free tables when their associated guests leave the restaurant
 
-In all, ***Table-It*** empowers hosts to efficiently manage their restaurant's resources, easing their burden and ensuring a smooth customer experience from the time the customer calls their reservation in to the time they leave the establishment.
+In all, ***Table-It!*** empowers hosts to efficiently manage their restaurant's resources, easing their burden and ensuring a smooth customer experience from the time the customer calls their reservation in to the time they leave the establishment.
 
 <hr />
 Live Application: https://table-it.vercel.app/dashboard
@@ -20,7 +20,43 @@ Live Application: https://table-it.vercel.app/dashboard
 Live API: https://table-it-api.vercel.app/
 <hr />
 
-## Sections
+## Installation
+
+1. Clone this repository to a local folder.
+1. Run `cp ./back-end/.env.sample ./back-end/.env`.
+1. Update the `./back-end/.env` file with the connection URLs to your PostgreSQL database instances.
+1. Run `cp ./front-end/.env.sample ./front-end/.env`.
+1. You should not need to make changes to the `./front-end/.env` file unless you want to connect to a backend at a location other than `http://localhost:5000`.
+1. Run `npm install` to install project dependencies.
+1. Run `npm run start:dev` to start the application in development mode.
+
+## Technologies
+
+* React: for UI rendering and logic.
+* React Router: for client-side routing through the application, including dynamic routes for individual reservations and tables and their associated IDs.
+* Bootstrap: for UI styling. Set to be replaced by Chakra UI in the future.
+* Node.js: server execution environment for running the backend.
+* Express: web application framework for building the ***Table-It!*** API.
+* express-async-handler: for simplifying asynchronous error handling in the ***Table-It!*** API. Automatically routes async errors to the custom Express error handler.
+* PostgreSQL: SQL database for storing and manipulating application data.
+* ElephantSQL: Hosted PostgreSQL instance for production environment.
+* Vercel: for deployment.
+
+## API Routes
+| Method   | Route                                 | Function                                                                                                                                                                                                          |
+|----------|---------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `GET`    | `/reservations`                       | Gets the complete list of reservations, sorted by `reservation_date` and `reservation_time`.                                                                                                                      |
+| `GET`    | `/reservations?date=YYYY-MM-DD`       | Gets all reservations made for the specified date, sorted by `reservation_time`.                                                                                                                                  |
+| `POST`   | `/reservations`                       | Validates the posted reservation, adding it to the database if validations pass.                                                                                                                                  |
+| `GET`    | `/reservations/:reservationId`        | Gets the reservation with the specified ID, assuming such a reservation exists in the database.                                                                                                                   |
+| `PUT`    | `/reservations/:reservationId`        | Validates the updated reservation information, updating the reservation with the specified ID using the sent data if validations pass.                                                                            |
+| `PUT`    | `/reservations/:reservationId/status` | Updates the status of the reservation with the specified ID according to the `status` parameter inside of the request body data.                                                                                  |
+| `GET`    | `/tables`                             | Gets the complete list of tables.                                                                                                                                                                                 |
+| `POST`   | `/tables`                             | Validates the posted table, adding it to the database if validations pass.                                                                                                                                        |
+| `PUT`    | `/tables/:tableId/seat`               | Seats the specified table using the reservation specified in the request body data. Updates the reservation's entry to a status of `seated` and the table's entry to the reservation_id of the given reservation. |
+| `DELETE` | `/tables/:tableId/seat`               | Finishes the specified table. Updates the table's reservation_id to `null` and the associated reservation's status to `finished`.                                                                                 |
+
+## Application Sections
 ### Navigation Menu
 ![Navigation Menu](/screenshots/menu.png)
 
