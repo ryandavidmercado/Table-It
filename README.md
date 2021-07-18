@@ -22,7 +22,7 @@ Live API: https://table-it-api.vercel.app/
 
 ## Installation
 
-1. Clone this repository to a local folder.
+1. Clone this repository to a local directory.
 1. Run `cp ./back-end/.env.sample ./back-end/.env`.
 1. Update the `./back-end/.env` file with the connection URLs to your PostgreSQL database instances.
 1. Run `cp ./front-end/.env.sample ./front-end/.env`.
