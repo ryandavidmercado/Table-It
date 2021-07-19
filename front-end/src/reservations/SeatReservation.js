@@ -16,25 +16,24 @@ function SeatReservation() {
   const history = useHistory();
   const { reservationId } = useParams();
 
-  useEffect(loadTables, []);
-  useEffect(loadReservation, [reservationId]);
-
-  function loadTables() {
+  const loadTables = () => {
     const abortController = new AbortController();
     setErr(null);
     listTables(abortController.signal).then(setTables).catch(setErr);
     return () => abortController.abort();
-  }
+  };
+  useEffect(loadTables, []);
 
-  function loadReservation() {
+  const loadReservation = () => {
     const abortController = new AbortController();
     readReservation(Number(reservationId), abortController.signal)
       .then(setReservation)
       .catch(setErr);
     return () => abortController.abort();
-  }
+  };
+  useEffect(loadReservation, [reservationId]);
 
-  function validateTable() {
+  const validateTable = () => {
     const tableToSeat = tables.find(
       (table) => table.table_id === Number(tableId)
     );
@@ -52,9 +51,9 @@ function SeatReservation() {
     }
 
     return true;
-  }
+  };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!validateTable()) return;
@@ -66,9 +65,7 @@ function SeatReservation() {
         )
       )
       .catch(setErr);
-  }
-
-  console.log(reservation);
+  };
 
   return (
     <div>

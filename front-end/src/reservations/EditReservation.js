@@ -31,7 +31,6 @@ function EditReservation() {
       .then(() => setHasLoaded(true))
       .catch(setErr);
   };
-
   useEffect(loadReservation, [reservationId]);
 
   const handleChange = (e) => {

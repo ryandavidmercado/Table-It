@@ -7,16 +7,15 @@ function Tables({ updateAll, setUpdateAll }) {
   const [tables, setTables] = useState([]);
   const [err, setErr] = useState(null);
 
-  useEffect(loadTables, [updateAll]);
-
-  function loadTables() {
+  const loadTables = () => {
     const abortController = new AbortController();
     setErr(null);
     listTables(abortController.signal).then(setTables).catch(setErr);
     return () => abortController.abort();
-  }
+  };
+  useEffect(loadTables, [updateAll]);
 
-  function finishHandler(e) {
+  const finishHandler = (e) => {
     const finish = window.confirm(
       "Is this table ready to seat new guests? This cannot be undone."
     );
@@ -25,7 +24,7 @@ function Tables({ updateAll, setUpdateAll }) {
     finishTable(e.target.getAttribute("data-table-id-finish"))
       .then(() => setUpdateAll((updateAll) => !updateAll))
       .catch(setErr);
-  }
+  };
 
   return (
     <div>

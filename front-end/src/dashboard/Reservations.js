@@ -10,16 +10,15 @@ function Reservations({ date, updateAll }) {
   const [reservations, setReservations] = useState([]);
   const [err, setErr] = useState(null);
 
-  useEffect(loadReservations, [date, updateAll]);
-
-  function loadReservations() {
+  const loadReservations = () => {
     const abortController = new AbortController();
     setErr(null);
     listReservations({ date }, abortController.signal)
       .then(setReservations)
       .catch(setErr);
     return () => abortController.abort();
-  }
+  };
+  useEffect(loadReservations, [date, updateAll]);
 
   return (
     <div>
