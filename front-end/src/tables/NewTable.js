@@ -22,9 +22,16 @@ function NewTable() {
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    createTable({ ...form, capacity: Number(form.capacity) })
-      .then(() => history.push("/dashboard"))
-      .catch(setErr);
+
+    const submit = async () => {
+      try {
+        await createTable({ ...form, capacity: Number(form.capacity) });
+        history.push("/dashboard");
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    submit();
   };
 
   return (

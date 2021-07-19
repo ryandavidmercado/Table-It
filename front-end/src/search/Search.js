@@ -13,13 +13,18 @@ function Search() {
 
   const loadSearchResults = (mobile_number) => {
     setErr(null);
-    return listReservations({ mobile_number })
-      .then((res) => {
-        if (!res.length) setErr({ message: "No reservations found" });
-        return res;
-      })
-      .then(setReservations)
-      .catch(setErr);
+
+    const load = async () => {
+      try {
+        const reservations = await listReservations({ mobile_number });
+
+        if (!reservations.length) setErr({ message: "No reservations found" });
+        setReservations(reservations);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    load();
   };
 
   const submitHandler = (e) => {

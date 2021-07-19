@@ -21,9 +21,9 @@ function Layout() {
 
   // gets the current screen dimensions whenever the window changes.
   useEffect(() => {
-    function handleResize() {
+    const handleResize = () => {
       setDimensions({ height: window.innerHeight, width: window.innerWidth });
-    }
+    };
 
     window.addEventListener("resize", handleResize);
   }, []);

@@ -26,10 +26,22 @@ function EditReservation() {
 
   const loadReservation = () => {
     const abortController = new AbortController();
-    readReservation(reservationId, abortController.signal)
-      .then(setForm)
-      .then(() => setHasLoaded(true))
-      .catch(setErr);
+
+    const load = async () => {
+      try {
+        const reservation = await readReservation(
+          reservationId,
+          abortController.signal
+        );
+        setForm(reservation);
+        setHasLoaded(true);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+
+    load();
+    return () => abortController.abort();
   };
   useEffect(loadReservation, [reservationId]);
 
@@ -47,13 +59,20 @@ function EditReservation() {
     const validationErrs = validateDateAndTime(date, time);
     if (validationErrs.length) return setErr({ message: validationErrs });
 
-    setErr(null);
-    editReservation({ ...form, people: Number(form.people) })
-      .then((reservation) => {
-        const { reservation_date } = reservation;
+    const submit = async () => {
+      setErr(null);
+      try {
+        const { reservation_date } = await editReservation({
+          ...form,
+          people: Number(form.people),
+        });
         history.push(`/dashboard?date=${normalizeISODate(reservation_date)}`);
-      })
-      .catch(setErr);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+
+    submit();
   };
 
   return (

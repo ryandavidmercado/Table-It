@@ -19,16 +19,37 @@ function SeatReservation() {
   const loadTables = () => {
     const abortController = new AbortController();
     setErr(null);
-    listTables(abortController.signal).then(setTables).catch(setErr);
+
+    const load = async () => {
+      try {
+        const tables = await listTables(abortController.signal);
+        setTables(tables);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    load();
+
     return () => abortController.abort();
   };
   useEffect(loadTables, []);
 
   const loadReservation = () => {
     const abortController = new AbortController();
-    readReservation(Number(reservationId), abortController.signal)
-      .then(setReservation)
-      .catch(setErr);
+
+    const load = async () => {
+      try {
+        const reservation = await readReservation(
+          Number(reservationId),
+          abortController.signal
+        );
+        setReservation(reservation);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    load();
+
     return () => abortController.abort();
   };
   useEffect(loadReservation, [reservationId]);
@@ -58,13 +79,17 @@ function SeatReservation() {
 
     if (!validateTable()) return;
 
-    seatReservation(Number(reservationId), Number(tableId))
-      .then(() =>
+    const submit = async () => {
+      try {
+        await seatReservation(Number(reservationId), Number(tableId));
         history.push(
           `/dashboard?date=${normalizeISODate(reservation.reservation_date)}`
-        )
-      )
-      .catch(setErr);
+        );
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    submit();
   };
 
   return (

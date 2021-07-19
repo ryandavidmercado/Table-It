@@ -10,7 +10,17 @@ function Tables({ updateAll, setUpdateAll }) {
   const loadTables = () => {
     const abortController = new AbortController();
     setErr(null);
-    listTables(abortController.signal).then(setTables).catch(setErr);
+
+    const load = async () => {
+      try {
+        const tables = await listTables(abortController.signal);
+        setTables(tables);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    load();
+
     return () => abortController.abort();
   };
   useEffect(loadTables, [updateAll]);
@@ -21,9 +31,16 @@ function Tables({ updateAll, setUpdateAll }) {
     );
     if (!finish) return;
 
-    finishTable(e.target.getAttribute("data-table-id-finish"))
-      .then(() => setUpdateAll((updateAll) => !updateAll))
-      .catch(setErr);
+    const tableId = e.target.getAttribute("data-table-id-finish");
+    const runFinish = async () => {
+      try {
+        await finishTable(tableId);
+        setUpdateAll((updateAll) => !updateAll);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    runFinish();
   };
 
   return (

@@ -35,13 +35,20 @@ function NewReservation() {
     const validationErrs = validateDateAndTime(date, time);
     if (validationErrs.length) return setErr({ message: validationErrs });
 
-    setErr(null);
-    createReservation({ ...form, people: Number(form.people) })
-      .then((reservation) => {
-        const { reservation_date } = reservation;
+    const submit = async () => {
+      setErr(null);
+      try {
+        const { reservation_date } = await createReservation({
+          ...form,
+          people: Number(form.people),
+        });
         history.push(`/dashboard?date=${normalizeISODate(reservation_date)}`);
-      })
-      .catch(setErr);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+
+    submit();
   };
 
   return (

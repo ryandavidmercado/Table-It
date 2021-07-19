@@ -12,10 +12,21 @@ function Reservations({ date, updateAll }) {
 
   const loadReservations = () => {
     const abortController = new AbortController();
-    setErr(null);
-    listReservations({ date }, abortController.signal)
-      .then(setReservations)
-      .catch(setErr);
+
+    const load = async () => {
+      setErr(null);
+      try {
+        const reservations = await listReservations(
+          { date },
+          abortController.signal
+        );
+        setReservations(reservations);
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    load();
+
     return () => abortController.abort();
   };
   useEffect(loadReservations, [date, updateAll]);

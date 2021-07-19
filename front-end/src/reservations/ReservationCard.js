@@ -19,9 +19,15 @@ function ReservationCard({
     );
     if (!cancel) return;
 
-    updateStatus(reservation_id, "cancelled")
-      .then(() => refreshReservations())
-      .catch(setErr);
+    const update = async () => {
+      try {
+        await updateStatus(reservation_id, "cancelled");
+        await refreshReservations();
+      } catch (e) {
+        setErr(e);
+      }
+    };
+    update();
   };
 
   const marginSpacer = { marginRight: "5px" };
