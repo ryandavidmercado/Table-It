@@ -30,10 +30,10 @@ function Reservations({ date, updateAll }) {
       <ErrorAlert error={err} />
       <hr />
       {reservations.map(
-        (reservation, idx) =>
+        (reservation) =>
           reservation.status !== "finished" && (
             <ReservationCard
-              key={idx}
+              key={reservation.reservation_id}
               reservation={reservation}
               setErr={setErr}
               refreshReservations={loadReservations}

@@ -60,9 +60,9 @@ function Search() {
       </div>
       <ErrorAlert error={err} />
       <div>
-        {reservations.map((reservation, idx) => (
+        {reservations.map((reservation) => (
           <ReservationCard
-            key={idx}
+            key={reservation.reservation_id}
             reservation={reservation}
             setErr={setErr}
             refreshReservations={refreshReservations}
