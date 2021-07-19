@@ -30,7 +30,7 @@ const {
 } = require("../validation/reservations/validateDateTime");
 
 //Main route handlers
-async function list(req, res) {
+const list = async (req, res) => {
   const { date = "", mobile_number = "" } = req.query;
 
   const data = date
@@ -40,17 +40,17 @@ async function list(req, res) {
     : await service.list();
 
   res.json({ data });
-}
+};
 
-async function create(req, res) {
+const create = async (req, res) => {
   res.status(201).json({
     data: await service.create(req.body.data),
   });
-}
+};
 
-function read(req, res) {
+const read = async (req, res) => {
   res.json({ data: res.locals.reservation });
-}
+};
 
 const updateStatus = async (req, res) => {
   const payload = {
