@@ -15,9 +15,9 @@ With ***Table-It!***, a host is given access to a high-level dashboard in which 
 In all, ***Table-It!*** empowers hosts to efficiently manage their restaurant's resources, easing their burden and ensuring a smooth customer experience from the time the customer calls their reservation in to the time they leave the establishment.
 
 <hr />
-Live Application: https://table-it.vercel.app/dashboard
+[Live Application](https://table-it.vercel.app/dashboard)
 
-Live API: https://table-it-api.vercel.app/
+[Live API](https://table-it-api.vercel.app/)
 <hr />
 
 ## Installation
