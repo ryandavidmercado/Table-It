@@ -1,4 +1,4 @@
-***Table-It!***
+# ***Table-It!***
 
 > A modern reservations system for the modern restaurant.
 
