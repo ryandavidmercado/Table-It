@@ -16,7 +16,7 @@ function ErrorAlert({ error }) {
           className="alert alert-danger m-2"
           p="20px"
           bgColor="red.200"
-          w="80%"
+          w={["85vw", "600px"]}
           mt="15px"
         >
           Error: {error.message}

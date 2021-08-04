@@ -43,7 +43,8 @@ export function formatAsTime(timeString) {
 export function formatAsTimeTwelve(timeString) {
   const twentyFour = formatAsTime(timeString);
   let hours = Number(twentyFour.slice(0, 2));
-  const mins = Number(twentyFour.slice(3));
+  let mins = Number(twentyFour.slice(3));
+  mins = mins === 0 ? "00" : mins;
   const adendum = hours < 12 ? "AM" : "PM";
   hours = hours % 12 || 12;
 

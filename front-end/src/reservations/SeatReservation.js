@@ -3,8 +3,13 @@ import { listTables, readReservation, seatReservation } from "../utils/api";
 import { useHistory, useParams } from "react-router-dom";
 import { normalizeISODate } from "../utils/parse-dateTime";
 import ErrorAlert from "../layout/ErrorAlert";
+import { Button, ButtonGroup, Center, Select, Stack } from "@chakra-ui/react";
+import ReservationCard from "../common-components/ReservationCard";
+import useDocumentTitle from "../utils/useTitle";
 
 function SeatReservation() {
+  useDocumentTitle("Seat Reservation - Table-It!");
+
   const [tableId, setTableId] = useState("none");
   const [tables, setTables] = useState([]);
   const [reservation, setReservation] = useState(null);
@@ -41,7 +46,7 @@ function SeatReservation() {
     if (!tableToSeat) err = "Please select a table to seat.";
     if (tableToSeat.reservation_id !== null) err = "Table is already occupied.";
     if (tableToSeat.capacity < reservation.people)
-      err = `Cannot sit party of ${reservation.people} at table of ${tableToSeat.capacity}.`;
+      err = `Cannot sit party of ${reservation.people} at a table of ${tableToSeat.capacity}.`;
 
     if (err) {
       setErr({ message: err });
@@ -66,35 +71,39 @@ function SeatReservation() {
   }
 
   return (
-    <div>
-      {tables.length && reservation && (
-        <>
-          <ErrorAlert error={err} />
-          <form onSubmit={handleSubmit}>
-            <select
-              name="table_id"
-              onChange={(e) => setTableId(e.target.value)}
-              value={tableId}
-              required
-            >
-              <option value="none" disabled hidden>
-                Select a Table
-              </option>
-              {tables.map((table) => (
-                <option value={table.table_id} key={table.table_id}>
-                  {table.table_name} - {table.capacity}
+      tables.length && reservation && (
+        <Center minHeight="100%" py="15px">
+          <Stack spacing="2" w={["85vw", "400px"]}>
+            <ErrorAlert error={err} />
+            <Center pb="15px">
+              <ReservationCard reservation={reservation} hideButtons={true} />
+            </Center>
+            <form onSubmit={handleSubmit}>
+              <Select
+                name="table_id"
+                onChange={(e) => setTableId(e.target.value)}
+                value={tableId}
+                required
+              >
+                <option value="none" disabled hidden>
+                  Select a Table
                 </option>
-              ))}
-            </select>
-            <br />
-            <button type="submit">Submit</button>
-            <button type="button" onClick={history.goBack}>
-              Cancel
-            </button>
-          </form>
-        </>
-      )}
-    </div>
+                {tables.map((table) => (
+                  <option value={table.table_id} key={table.table_id}>
+                    {table.table_name} - {table.capacity}
+                  </option>
+                ))}
+              </Select>
+              <ButtonGroup mt="10px">
+                <Button type="submit" colorScheme="blue">Submit</Button>
+                <Button type="button" colorScheme="red" onClick={history.goBack}>
+                  Cancel
+                </Button>
+              </ButtonGroup>
+            </form>
+          </Stack>
+        </Center>
+      )
   );
 }
 

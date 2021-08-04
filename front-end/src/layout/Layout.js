@@ -27,7 +27,7 @@ function Layout() {
   return (
     <>
       <Menu />
-      <Box height={height}>
+      <Box height={height} pt={["50px", "60px"]}>
         <Routes />
       </Box>
     </>

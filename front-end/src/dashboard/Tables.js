@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import { listTables } from "../utils/api";
+import { listTables, finishTable } from "../utils/api";
 import ErrorAlert from "../layout/ErrorAlert";
 import { Box, Grid, Text, Center } from "@chakra-ui/react";
+import TablesList from "../common-components/TablesList";
 
 function Tables({ updateAll, setUpdateAll, visible }) {
   const [tables, setTables] = useState([]);
@@ -16,16 +17,16 @@ function Tables({ updateAll, setUpdateAll, visible }) {
     return () => abortController.abort();
   }
 
-  // function finishHandler(e) {
-  //   const finish = window.confirm(
-  //     "Is this table ready to seat new guests? This cannot be undone."
-  //   );
-  //   if (!finish) return;
+  function finishHandler(e) {
+    const finish = window.confirm(
+      "Is this table ready to seat new guests? This cannot be undone."
+    );
+    if (!finish) return;
 
-  //   finishTable(e.target.getAttribute("data-table-id-finish"))
-  //     .then(() => setUpdateAll((updateAll) => !updateAll))
-  //     .catch(setErr);
-  // }
+    finishTable(e.target.getAttribute("data-table-id-finish"))
+      .then(() => setUpdateAll((updateAll) => !updateAll))
+      .catch(setErr);
+  }
 
   const openSeats =
     tables.length &&
@@ -46,9 +47,8 @@ function Tables({ updateAll, setUpdateAll, visible }) {
   return (
     <Grid
       overflowY="hidden"
-      pt={["50px", "60px"]}
       templateRows="auto 1fr"
-      display={visible ? "block" : "none"}
+      display={visible ? "grid" : "none"}
     >
       <Box py="15px" boxShadow="0px 2px 3px rgba(0,0,0,.2)" zIndex="2">
         <Center>
@@ -70,43 +70,9 @@ function Tables({ updateAll, setUpdateAll, visible }) {
         </Center>
         <ErrorAlert error={err} />
       </Box>
+      <TablesList tables={tables} visible={visible} finishHandler={finishHandler} />
     </Grid>
   );
-  // return (
-  //   <div>
-  //     <ErrorAlert error={err} />
-  //     <table className="table">
-  //       <thead>
-  //         <tr>
-  //           <th>Table Name</th>
-  //           <th>Capacity</th>
-  //           <th>Occupied?</th>
-  //         </tr>
-  //       </thead>
-  //       <tbody>
-  //         {tables.map((table) => (
-  //           <tr key={table.table_id}>
-  //             <td>{table.table_name}</td>
-  //             <td>{table.capacity}</td>
-  //             <td data-table-id-status={table.table_id}>
-  //               {table.reservation_id === null ? "Free" : "Occupied"}
-  //             </td>
-  //             <td>
-  //               {table.reservation_id === null ? null : (
-  //                 <button
-  //                   data-table-id-finish={table.table_id}
-  //                   onClick={finishHandler}
-  //                 >
-  //                   Finish
-  //                 </button>
-  //               )}
-  //             </td>
-  //           </tr>
-  //         ))}
-  //       </tbody>
-  //     </table>
-  //   </div>
-  // );
 }
 
 export default Tables;

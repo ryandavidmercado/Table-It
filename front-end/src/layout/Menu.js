@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Box,
   Flex,
   Portal,
   Collapse,
-  useDisclosure,
   Text,
 } from "@chakra-ui/react";
 
@@ -19,7 +18,9 @@ import NavItems from "./NavItems";
  */
 
 function Menu() {
-  const { isOpen, onToggle } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onToggle = () => setIsOpen(isOpen => !isOpen);
 
   return (
     <Portal>
@@ -31,6 +32,7 @@ function Menu() {
         position="fixed"
         top="0"
         zIndex={9999}
+        onBlur={() => setTimeout(() => setIsOpen(false), 100)}
       >
         <Flex
           justify="space-between"

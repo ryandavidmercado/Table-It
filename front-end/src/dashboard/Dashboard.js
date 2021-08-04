@@ -6,6 +6,7 @@ import Reservations from "./Reservations";
 import Tables from "./Tables";
 import { Grid } from "@chakra-ui/react";
 import DashboardNav from "./DashboardNav";
+import useDocumentTitle from "../utils/useTitle";
 
 /**
  * Defines the dashboard page.
@@ -14,6 +15,8 @@ import DashboardNav from "./DashboardNav";
  * @returns {JSX.Element}
  */
 function Dashboard() {
+  useDocumentTitle("Table-It!");
+  
   const query = useQuery();
   const date = query.get("date") || dayjs().format("YYYY-MM-DD");
 

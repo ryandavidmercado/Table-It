@@ -4,10 +4,12 @@ import { validateDateAndTime } from "../utils/validation/validateDateAndTime";
 import { normalizeISODate } from "../utils/parse-dateTime";
 import { createReservation } from "../utils/api";
 
-import ErrorAlert from "../layout/ErrorAlert";
+import useDocumentTitle from "../utils/useTitle";
 import ReservationForm from "./ReservationForm";
 
 function NewReservation() {
+  useDocumentTitle("New Reservation - Table-It!")
+
   const [error, setError] = useState(null);
   const [form, setForm] = useState({
     first_name: "",
@@ -44,14 +46,12 @@ function NewReservation() {
   };
 
   return (
-    <div>
-      <ReservationForm
-        form={form}
-        handleChange={handleChange}
-        handleSubmit={handleSubmit}
-      />
-      <ErrorAlert error={error} />
-    </div>
+    <ReservationForm
+      form={form}
+      handleChange={handleChange}
+      handleSubmit={handleSubmit}
+      err={error}
+    />
   );
 }
 

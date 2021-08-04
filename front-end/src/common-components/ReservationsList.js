@@ -1,9 +1,9 @@
 import { Box, Flex, Grid, SlideFade } from "@chakra-ui/react";
 import ReservationCard from "./ReservationCard";
 
-function ReservationsList({ reservations, loadReservations, setErr, visible }) {
+function ReservationsList({ reservations, loadReservations, setErr, visible, showFinished = false}) {
   return (
-    <Box overflowY="auto" py="15px">
+    <Box overflowY="auto" py="15px" px="20px">
       <SlideFade in={visible} offsetY="20px">
         <Flex align="center" justify="center" minHeight="100%">
           <Grid
@@ -14,10 +14,10 @@ function ReservationsList({ reservations, loadReservations, setErr, visible }) {
             w="100%"
           >
             {reservations.map(
-              (reservation, idx) =>
-                reservation.status !== "finished" && (
+              (reservation) =>
+                (reservation.status !== "finished" || showFinished) && (
                   <ReservationCard
-                    key={idx}
+                    key={reservation.reservation_id}
                     reservation={reservation}
                     setErr={setErr}
                     refreshReservations={loadReservations}

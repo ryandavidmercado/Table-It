@@ -26,7 +26,6 @@ function Reservations({ date, updateAll, visible }) {
   return (
     <Grid
       overflowY="hidden"
-      pt={["50px", "60px"]}
       templateRows="auto 1fr"
       display={visible ? "grid" : "none"}
     >

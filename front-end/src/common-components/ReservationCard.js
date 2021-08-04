@@ -2,7 +2,7 @@ import { formatAsTimeTwelve } from "../utils/date-time";
 import { updateStatus } from "../utils/api";
 import titleCaser from "../utils/titleCaser";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   Box,
   ButtonGroup,
@@ -17,7 +17,7 @@ import { IoPerson } from "react-icons/io5";
 import { FaPhone } from "react-icons/fa";
 import { BsPeopleFill } from "react-icons/bs";
 
-function ReservationCard({ reservation, refreshReservations, setErr }) {
+function ReservationCard({ reservation, refreshReservations, setErr, hideButtons = false }) {
   const cancelHandler = (e) => {
     e.preventDefault();
     const reservation_id = e.target.getAttribute("data-reservation-id-cancel");
@@ -32,21 +32,27 @@ function ReservationCard({ reservation, refreshReservations, setErr }) {
       .catch(setErr);
   };
 
+  const history = useHistory();
+
   const { status } = reservation;
   const statusColor =
     status === "cancelled"
       ? "red.500"
       : status === "seated"
+      ? "orange.400"
+      : status === "finished"
       ? "green.500"
-      : "black";
+      : "black"
   const statusWeight = status === "booked" ? "normal" : "bold";
 
   return (
     <Flex
-      boxShadow="0px 2px 3px 1px rgba(0,0,0,.3)"
+      boxShadow="0px 2px 3px rgba(0,0,0,.2)"
+      border="1px solid rgba(0,0,0,.2)"
       width="300px"
       direction="column"
       align="center"
+      justify="center"
     >
       <Box w="100%" textAlign="center" py="15px">
         <VStack py="15px">
@@ -74,17 +80,15 @@ function ReservationCard({ reservation, refreshReservations, setErr }) {
           {reservation.people > 1 ? "people" : "person"}
         </Text>
       </Box>
-      {reservation.status === "booked" && (
+      {reservation.status === "booked" && !hideButtons && (
         <ButtonGroup isAttached size="sm" variant="solid">
-          <Button roundedBottom="0">
+          <Button roundedBottom="0" onClick={() => history.push(`/reservations/${reservation.reservation_id}/seat`)}>
             <Link to={`/reservations/${reservation.reservation_id}/seat`}>
               Seat
             </Link>
           </Button>
-          <Button roundedBottom="0" borderLeft="1px solid rgba(0,0,0,.2)">
-            <Link to={`/reservations/${reservation.reservation_id}/edit`}>
+          <Button roundedBottom="0" borderLeft="1px solid rgba(0,0,0,.2)" onClick={() => history.push(`/reservations/${reservation.reservation_id}/edit`)}>
               Edit
-            </Link>
           </Button>
           <Button
             data-reservation-id-cancel={reservation.reservation_id}
