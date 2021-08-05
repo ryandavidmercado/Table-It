@@ -83,9 +83,7 @@ function ReservationCard({ reservation, refreshReservations, setErr, hideButtons
       {reservation.status === "booked" && !hideButtons && (
         <ButtonGroup isAttached size="sm" variant="solid">
           <Button roundedBottom="0" onClick={() => history.push(`/reservations/${reservation.reservation_id}/seat`)}>
-            <Link to={`/reservations/${reservation.reservation_id}/seat`}>
               Seat
-            </Link>
           </Button>
           <Button roundedBottom="0" borderLeft="1px solid rgba(0,0,0,.2)" onClick={() => history.push(`/reservations/${reservation.reservation_id}/edit`)}>
               Edit
