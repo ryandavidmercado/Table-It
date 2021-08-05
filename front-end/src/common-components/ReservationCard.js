@@ -2,7 +2,7 @@ import { formatAsTimeTwelve } from "../utils/date-time";
 import { updateStatus } from "../utils/api";
 import titleCaser from "../utils/titleCaser";
 
-import { Link, useHistory } from "react-router-dom";
+import {  useHistory } from "react-router-dom";
 import {
   Box,
   ButtonGroup,
