@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # ![Logo](/front-end/public/favicon.ico) ***Table-It!***
+=======
+# ***Table-It!***
+>>>>>>> UIOverhaul
 
 > A modern reservations system for the modern restaurant.
 

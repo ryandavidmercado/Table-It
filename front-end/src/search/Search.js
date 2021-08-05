@@ -1,13 +1,17 @@
 import { useState } from "react";
 
 import { listReservations } from "../utils/api";
-
-import ReservationCard from "../reservations/ReservationCard";
+import { Box, Button, ButtonGroup, Center, Input } from "@chakra-ui/react"
+import useDocumentTitle from "../utils/useTitle";
+import ReservationsList from "../common-components/ReservationsList";
 import ErrorAlert from "../layout/ErrorAlert";
+import { useHistory } from "react-router";
 
 function Search() {
+  useDocumentTitle("Search - Table-It!");
+  const history = useHistory();
+
   const [number, setNumber] = useState("");
-  const [numberCache, setNumberCache] = useState("");
   const [reservations, setReservations] = useState([]);
   const [err, setErr] = useState(null);
 
@@ -29,7 +33,6 @@ function Search() {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setNumberCache(number);
     loadSearchResults(number);
   };
 
@@ -37,44 +40,33 @@ function Search() {
     setNumber(e.target.value);
   };
 
-  const refreshReservations = () => {
-    loadSearchResults(numberCache);
-  };
-
   return (
-    <div className="container">
-      <h1>Search</h1>
-      <hr />
-      <div>
-        <form
-          onSubmit={submitHandler}
-          style={{ display: "flex", marginBottom: "15px" }}
-        >
-          <input
-            type="text"
-            name="mobile_number"
-            className="form-control"
-            onChange={changeHandler}
-            value={number}
-            placeholder="Enter a customer's phone number"
-          />
-          <button type="submit" className="btn btn-primary">
-            Find
-          </button>
-        </form>
-      </div>
-      <ErrorAlert error={err} />
-      <div>
-        {reservations.map((reservation) => (
-          <ReservationCard
-            key={reservation.reservation_id}
-            reservation={reservation}
-            setErr={setErr}
-            refreshReservations={refreshReservations}
-          />
-        ))}
-      </div>
-    </div>
+    <>
+      <Center>
+        <Box width={["85vw", "400px"]} py="20px">
+          <form onSubmit={submitHandler}>
+            <Box mr="15px">
+            <label htmlFor="mobile_number">
+            Search by Phone
+            <Input
+              type="text"
+              name="mobile_number"
+              onChange={changeHandler}
+              value={number}
+              placeholder="Enter a customer's phone number"
+            />
+            </label>
+            </Box>
+            <ButtonGroup mt="10px">
+              <Button type="submit" colorScheme="blue">Find</Button>
+              <Button type="button" onClick={() => history.goBack()} colorScheme="red">Cancel</Button>
+            </ButtonGroup>
+          </form>
+        <ErrorAlert error={err} />
+        </Box>
+      </Center>
+      <ReservationsList reservations={reservations} visible={!!reservations.length} showFinished={true}/>
+    </>
   );
 }
 

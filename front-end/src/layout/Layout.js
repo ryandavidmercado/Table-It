@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-
 import Menu from "./Menu";
 import Routes from "./Routes";
 
+import { Box } from "@chakra-ui/react";
 import "./Layout.css";
 
 /**
@@ -13,38 +13,24 @@ import "./Layout.css";
  * @returns {JSX.Element}
  */
 function Layout() {
-  // holds the current screen dimensions as state.
-  const [dimensions, setDimensions] = useState({
-    height: window.innerHeight,
-    width: window.innerWidth,
-  });
+  const [height, setHeight] = useState(window.innerHeight);
 
-  // gets the current screen dimensions whenever the window changes.
   useEffect(() => {
     const handleResize = () => {
-      setDimensions({ height: window.innerHeight, width: window.innerWidth });
+      setHeight(window.innerHeight);
     };
 
     window.addEventListener("resize", handleResize);
-  }, []);
+    return () => window.removeEventListener("resize", handleResize);
+  });
 
   return (
-    <div className="container-fluid">
-      <div
-        className="row h-100"
-        // forces the sidebar to full height on desktop, fixing a glaring layout bug.
-        style={{
-          minHeight: dimensions.width < 768 ? 0 : `${dimensions.height}px`,
-        }}
-      >
-        <div className="col-md-2 side-bar">
-          <Menu />
-        </div>
-        <div className="col py-3">
-          <Routes />
-        </div>
-      </div>
-    </div>
+    <>
+      <Menu />
+      <Box height={height} pt={["50px", "60px"]}>
+        <Routes />
+      </Box>
+    </>
   );
 }
 

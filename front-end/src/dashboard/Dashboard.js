@@ -5,6 +5,9 @@ import useQuery from "../utils/useQuery";
 
 import Reservations from "./Reservations";
 import Tables from "./Tables";
+import { Grid } from "@chakra-ui/react";
+import DashboardNav from "./DashboardNav";
+import useDocumentTitle from "../utils/useTitle";
 
 /**
  * Defines the dashboard page.
@@ -13,6 +16,8 @@ import Tables from "./Tables";
  * @returns {JSX.Element}
  */
 function Dashboard() {
+  useDocumentTitle("Table-It!");
+  
   const query = useQuery();
   const date = query.get("date") || dayjs().format("YYYY-MM-DD");
 
@@ -20,13 +25,30 @@ function Dashboard() {
   // to trigger an update, toggle updateAll using setUpdateAll.
   // to hook a component into global updates, add updateAll to its useEffect dependencies.
   const [updateAll, setUpdateAll] = useState(false);
+  const [selection, setSelection] = useState("reservations");
+  const isReservations = selection === "reservations";
+  const isTables = selection === "tables";
 
   return (
-    <main className="container">
-      <h1>Dashboard</h1>
-      <Reservations date={date} updateAll={updateAll} />
-      <Tables setUpdateAll={setUpdateAll} updateAll={updateAll} />
-    </main>
+    <Grid
+      as="main"
+      h="100%"
+      templateColumns="1fr"
+      templateRows="1fr auto"
+      overflowY="hidden"
+    >
+      <Reservations
+        date={date}
+        updateAll={updateAll}
+        visible={isReservations}
+      />
+      <Tables
+        setUpdateAll={setUpdateAll}
+        updateAll={updateAll}
+        visible={isTables}
+      />
+      <DashboardNav selection={selection} setSelection={setSelection} />
+    </Grid>
   );
 }
 

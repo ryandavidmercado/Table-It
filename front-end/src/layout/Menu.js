@@ -1,5 +1,15 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+
+import {
+  Box,
+  Flex,
+  Portal,
+  Collapse,
+  Text,
+} from "@chakra-ui/react";
+
+import Hamburger from "hamburger-react";
+import NavItems from "./NavItems";
 
 /**
  * Defines the menu for this application.
@@ -8,61 +18,51 @@ import { Link } from "react-router-dom";
  */
 
 function Menu() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onToggle = () => setIsOpen(isOpen => !isOpen);
+
   return (
-    <nav className="navbar navbar-dark align-items-start p-0">
-      <div className="container-fluid d-flex flex-column p-0">
-        <Link
-          className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
-          to="/"
+    <Portal>
+      <Box
+        w="100%"
+        bg="gray.700"
+        transition="all .5s linear"
+        overflowY="hidden"
+        position="fixed"
+        top="0"
+        zIndex={9999}
+        onBlur={() => setTimeout(() => setIsOpen(false), 100)}
+      >
+        <Flex
+          justify="space-between"
+          align="center"
+          px="5vw"
+          height={["50px", "60px"]}
         >
-          <div className="sidebar-brand-text mx-3">
-            <span
-              style={{
-                fontWeight: "bold",
-                fontStyle: "italic",
-                fontSize: "1.5rem",
-              }}
-            >
-              Table-It!
-            </span>
-          </div>
-        </Link>
-        <hr className="sidebar-divider my-0" />
-        <ul className="nav navbar-nav text-light" id="accordionSidebar">
-          <li className="nav-item">
-            <Link className="nav-link" to="/dashboard">
-              <span className="oi oi-dashboard" />
-              &nbsp;Dashboard
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/search">
-              <span className="oi oi-magnifying-glass" />
-              &nbsp;Search
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/reservations/new">
-              <span className="oi oi-plus" />
-              &nbsp;New Reservation
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/tables/new">
-              <span className="oi oi-layers" />
-              &nbsp;New Table
-            </Link>
-          </li>
-        </ul>
-        <div className="text-center d-none d-md-inline">
-          <button
-            className="btn rounded-circle border-0"
-            id="sidebarToggle"
-            type="button"
+          <Text
+            color="gray.100"
+            as="h1"
+            fontSize="clamp(1.4rem, 4vw, 2.5rem)"
+            fontWeight="bold"
+            fontStyle="italic"
+            ml="10px"
+          >
+            Table-It!
+          </Text>
+          <Hamburger
+            toggled={isOpen}
+            toggle={onToggle}
+            size={20}
+            color="white"
+            width="20px"
           />
-        </div>
-      </div>
-    </nav>
+        </Flex>
+        <Collapse in={isOpen}>
+          <NavItems />
+        </Collapse>
+      </Box>
+    </Portal>
   );
 }
 

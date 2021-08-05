@@ -5,10 +5,12 @@ import { validateDateAndTime } from "../utils/validation/validateDateAndTime";
 import { normalizeISODate } from "../utils/parse-dateTime";
 import { editReservation, readReservation } from "../utils/api";
 
-import ErrorAlert from "../layout/ErrorAlert";
 import ReservationForm from "./ReservationForm";
+import useDocumentTitle from "../utils/useTitle";
 
 function EditReservation() {
+  useDocumentTitle("Edit Reservation - Table-It!");
+
   const [err, setErr] = useState(null);
   const [form, setForm] = useState({
     first_name: "",
@@ -19,7 +21,6 @@ function EditReservation() {
     people: "",
     reservation_id: "",
   });
-  const [hasLoaded, setHasLoaded] = useState(false);
 
   const history = useHistory();
   const { reservationId } = useParams();
@@ -34,7 +35,6 @@ function EditReservation() {
           abortController.signal
         );
         setForm(reservation);
-        setHasLoaded(true);
       } catch (e) {
         setErr(e);
       }
@@ -76,18 +76,14 @@ function EditReservation() {
   };
 
   return (
-    <div className="container">
-      <h1>Edit Reservation</h1>
-      <hr />
-      {hasLoaded && (
+      form.reservation_id && (
         <ReservationForm
           form={form}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
+          err={err}
         />
-      )}
-      <ErrorAlert error={err} />
-    </div>
+    )
   );
 }
 

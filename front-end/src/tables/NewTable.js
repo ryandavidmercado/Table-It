@@ -2,10 +2,14 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { createTable } from "../utils/api";
+import ErrorAlert from "../layout/ErrorAlert"
+import useDocumentTitle from "../utils/useTitle"
+import { Center, Stack, Input, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, Button, ButtonGroup } from "@chakra-ui/react"
 
-import ErrorAlert from "../layout/ErrorAlert";
 
 function NewTable() {
+  useDocumentTitle("New Table - Table-It!");
+
   const history = useHistory();
   const [form, setForm] = useState({
     table_name: "",
@@ -35,47 +39,40 @@ function NewTable() {
   };
 
   return (
-    <div className="container">
-      <h1>New Table</h1>
-      <hr />
+    <Center minHeight="100%" py="20px">
       <form onSubmit={handleSumbit}>
-        <div className="form-group">
-          <label htmlFor="table_name">Table Name</label>
-          <input
-            type="text"
-            name="table_name"
-            className="form-control"
-            minLength="2"
-            value={form.table_name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="capacity">Capacity</label>
-          <input
-            type="number"
-            name="capacity"
-            className="form-control"
-            value={form.capacity}
-            onChange={handleChange}
-            min="1"
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary mr-2">
-          Submit
-        </button>
-        <button
-          type="button"
-          className="btn btn-secondary"
-          onClick={history.goBack}
-        >
-          Cancel
-        </button>
+        <Stack spacing="2" w={["85vw", "400px"]}>
+          <ErrorAlert error={err} />
+          <label htmlFor="table_name">
+            Table Name
+            <Input
+              type="text"
+              name="table_name"
+              minLength="2"
+              value={form.table_name}
+              onChange={handleChange}
+              required
+            />
+          </label>
+          <label htmlFor="capacity">
+            Capacity
+            <NumberInput name="capacity" min={1} value={form.capacity} onChange={(value) => handleChange({target: {name: "capacity", value}})} required>
+              <NumberInputField  />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </label>
+          <ButtonGroup>
+            <Button type="submit" colorScheme="blue">Submit</Button>
+            <Button type="button" colorScheme="red" onClick={history.goBack}>
+              Cancel
+            </Button>
+          </ButtonGroup>
+        </Stack>
       </form>
-      <ErrorAlert error={err} />
-    </div>
+    </Center>
   );
 }
 

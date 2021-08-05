@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-
-import { listReservations } from "../utils/api";
-
-import ReservationCard from "../reservations/ReservationCard";
-import DateHandler from "./DateHandler";
+import { listReservations } from "../utils/api"
 import ErrorAlert from "../layout/ErrorAlert";
+import DateHandler from "./DateHandler";
+import { Box, Grid, Text, Center } from "@chakra-ui/react";
+import ReservationsList from "../common-components/ReservationsList";
 
-function Reservations({ date, updateAll }) {
+function Reservations({ date, updateAll, visible }) {
   const [reservations, setReservations] = useState([]);
   const [err, setErr] = useState(null);
+  const [key, setKey] = useState(0);
 
-  const loadReservations = () => {
+  useEffect(loadReservations, [date, updateAll]);
+
+  function loadReservations() {
+    setReservations([]);
+    setKey((key) => key + 1);
     const abortController = new AbortController();
 
     const load = async () => {
@@ -32,25 +36,30 @@ function Reservations({ date, updateAll }) {
   useEffect(loadReservations, [date, updateAll]);
 
   return (
-    <div>
-      <div className="md-flex mb-3">
-        <h4 className="mb-0">Reservations for: {date}</h4>
-      </div>
-      <DateHandler date={date} />
-      <ErrorAlert error={err} />
-      <hr />
-      {reservations.map(
-        (reservation) =>
-          reservation.status !== "finished" && (
-            <ReservationCard
-              key={reservation.reservation_id}
-              reservation={reservation}
-              setErr={setErr}
-              refreshReservations={loadReservations}
-            />
-          )
-      )}
-    </div>
+    <Grid
+      overflowY="hidden"
+      templateRows="auto 1fr"
+      display={visible ? "grid" : "none"}
+    >
+      <Box py="15px" boxShadow="0px 2px 3px rgba(0,0,0,.2)" zIndex="2">
+        <Center>
+          <Text fontSize="1.2rem">Reservations</Text>
+          <Text mx="10px" fontSize="1.2rem">
+            -
+          </Text>
+          <Text textColor="gray.600">{date}</Text>
+        </Center>
+        <DateHandler date={date} />
+        <ErrorAlert error={err} />
+      </Box>
+      <ReservationsList
+        key={key}
+        reservations={reservations}
+        loadReservations={loadReservations}
+        setErr={setErr}
+        visible={visible}
+      />
+    </Grid>
   );
 }
 

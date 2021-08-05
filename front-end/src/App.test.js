@@ -9,6 +9,6 @@ test("renders title", () => {
       <App />
     </Router>
   );
-  const restaurant = screen.getByText(/Table-It!/i);
+  const restaurant = screen.getByText(/table-it!/i);
   expect(restaurant).toBeInTheDocument();
 });
