@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 # ![Logo](/front-end/public/favicon.ico) ***Table-It!***
-=======
-# ***Table-It!***
->>>>>>> UIOverhaul
-
 > A modern reservations system for the modern restaurant.
 
 A restaurant host is tasked with quite a bit of management: reservations tracking and table management make up their core responsibilities, requiring a solid overview of their restaurant's demands and available resources. ***Table-It!*** is designed to make their lives easier.
